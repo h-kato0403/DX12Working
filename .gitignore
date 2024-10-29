@@ -1,3 +1,7 @@
+#directory
+.vs/
+x64/
+
 # Prerequisites
 *.d
 
