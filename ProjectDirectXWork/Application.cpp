@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "ConsoleLog.h"
+#include "Engine.h"
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
@@ -18,13 +19,24 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 void Application::StartApplication(const TCHAR* appName)
 {
 	InitializeWindow(appName);
+
+	Engine engine = Engine::Get();
+	if (engine.Init(
+		m_hWnd,
+		WINDOW_WIDTH,
+		WINDOW_HEIGHT
+	))
+	{
+		return;
+	}
+
 	Main();
 }
 
 void Application::InitializeWindow(const TCHAR* appName)
 {
-	hInst = GetModuleHandle(nullptr);
-	if (hInst == nullptr)
+	m_hInst = GetModuleHandle(nullptr);
+	if (m_hInst == nullptr)
 	{
 		return;
 	}
@@ -34,12 +46,12 @@ void Application::InitializeWindow(const TCHAR* appName)
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = WndProc;
-	wc.hIcon = LoadIcon(hInst, IDI_APPLICATION);
-	wc.hCursor = LoadCursor(hInst, IDC_ARROW);
+	wc.hIcon = LoadIcon(m_hInst, IDI_APPLICATION);
+	wc.hCursor = LoadCursor(m_hInst, IDC_ARROW);
 	wc.hbrBackground = GetSysColorBrush(COLOR_BACKGROUND);
 	wc.lpszMenuName = nullptr;
 	wc.lpszClassName = appName;
-	wc.hIconSm = LoadIcon(hInst, IDI_APPLICATION);
+	wc.hIconSm = LoadIcon(m_hInst, IDI_APPLICATION);
 	// ウィンドウクラスの登録。
 	RegisterClassEx(&wc);
 	//	 ウィンドウサイズの設定
@@ -51,7 +63,7 @@ void Application::InitializeWindow(const TCHAR* appName)
 	AdjustWindowRect(&rect, style, FALSE);
 
 	//	ウィンドウの生成
-	hWnd = CreateWindowEx(
+	m_hWnd = CreateWindowEx(
 		0,
 		appName,
 		appName,
@@ -62,14 +74,14 @@ void Application::InitializeWindow(const TCHAR* appName)
 		rect.bottom - rect.top,
 		nullptr,
 		nullptr,
-		hInst,
+		m_hInst,
 		nullptr
 	);
 
 	//	 ウィンドウを表示
-	ShowWindow(hWnd, SW_SHOWNORMAL);
+	ShowWindow(m_hWnd, SW_SHOWNORMAL);
 	//	 ウィンドウにフォーカスする
-	SetFocus(hWnd);
+	SetFocus(m_hWnd);
 }
 
 void Application::Main()

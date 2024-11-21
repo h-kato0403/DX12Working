@@ -21,7 +21,7 @@ private:
 	void Render();
 
 private:
-	HINSTANCE hInst;
-	HWND hWnd = NULL;
+	HINSTANCE m_hInst;
+	HWND m_hWnd = NULL;
 };
 
