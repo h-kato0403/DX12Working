@@ -7,7 +7,7 @@ class ConstantBuffer
 public:
 	ConstantBuffer(size_t size);
 
-	bool Isvalid()
+	bool IsValid()
 	{
 		return m_isValid;
 	}

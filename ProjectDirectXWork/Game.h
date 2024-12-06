@@ -1,6 +1,8 @@
 #pragma once
 #include "VertexBuffer.h"
 #include "ConstantBuffer.h"
+#include "RootSignature.h"
+#include "Engine.h"
 
 class Game
 {
@@ -16,7 +18,14 @@ public:
 	bool Render();
 
 private:
-	VertexBuffer* m_vertexBuffer = nullptr;
-	ConstantBuffer* m_constantBuffer = nullptr;
+	bool CreateVertexBuffer();
+	bool CreateConstantBuffer();
+	bool CreateRootSignature();
+
+	VertexBuffer* m_pVertexBuffer = nullptr;
+	RootSignature* m_pRootSignature = nullptr;
+
+
+
 };
 

@@ -2,7 +2,7 @@
 #include "Engine.h"
 #include "ConsoleLog.h"
 
-Console log = Console::Get();
+Console g_log = Console::Get();
 
 ConstantBuffer::ConstantBuffer(size_t size)
 {
@@ -22,7 +22,7 @@ ConstantBuffer::ConstantBuffer(size_t size)
 	);
 	if (FAILED(hr))
 	{
-		log.Log("FAILED ConstantBuffer - CreateCommittedResource");
+		g_log.Log("FAILED ConstantBuffer - CreateCommittedResource");
 		return;
 	}
 
@@ -33,7 +33,7 @@ ConstantBuffer::ConstantBuffer(size_t size)
 	);
 	if (FAILED(hr))
 	{
-		log.Log("FAILED ConstantBuffer - Map");
+		g_log.Log("FAILED ConstantBuffer - Map");
 		return;
 	}
 

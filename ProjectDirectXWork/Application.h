@@ -3,8 +3,6 @@
 
 class Application
 {
-	const UINT WINDOW_WIDTH = 1080;
-	const UINT WINDOW_HEIGHT = 720;
 
 public:
 	static Application& Get()
@@ -14,12 +12,14 @@ public:
 	}
 
 	void StartApplication(const TCHAR* appName);
-private:
 
+	const UINT WINDOW_WIDTH = 1080;
+	const UINT WINDOW_HEIGHT = 720;
+
+private:
 	void InitializeWindow(const TCHAR* appName);
 	void Main();
 
-private:
 	HINSTANCE m_hInst;
 	HWND m_hWnd = NULL;
 };
