@@ -1,6 +1,9 @@
 #include "Application.h"
-#include "ConsoleLog.h"
 #include "Engine.h"
+#include "Game.h"
+#include "ConsoleLog.h"
+
+Game g_game = Game::Get();
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
@@ -20,8 +23,7 @@ void Application::StartApplication(const TCHAR* appName)
 {
 	InitializeWindow(appName);
 
-	Engine engine = Engine::Get();
-	if (engine.Init(
+	if (!Engine::Get().Init(
 		m_hWnd,
 		WINDOW_WIDTH,
 		WINDOW_HEIGHT
@@ -30,6 +32,7 @@ void Application::StartApplication(const TCHAR* appName)
 		return;
 	}
 
+	g_game.Initialize();
 	Main();
 }
 
@@ -96,13 +99,11 @@ void Application::Main()
 		}
 		else
 		{
-			//	ï`âÊèàóù
-			Render();
+			g_game.Update();
+			Engine::Get().RenderBegin();
+			g_game.Render();
+			Engine::Get().RenderEnd();
 		}
 	}
 }
 
-void Application::Render()
-{
-	
-}

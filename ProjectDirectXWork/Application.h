@@ -18,7 +18,6 @@ private:
 
 	void InitializeWindow(const TCHAR* appName);
 	void Main();
-	void Render();
 
 private:
 	HINSTANCE m_hInst;
