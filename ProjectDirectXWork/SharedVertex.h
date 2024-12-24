@@ -10,6 +10,26 @@ struct Vertex
 	DirectX::XMFLOAT2 UV_POSITION;
 	DirectX::XMFLOAT3 TANGENT;
 	DirectX::XMFLOAT4 COLOR;
+
+	static const D3D12_INPUT_LAYOUT_DESC InputLayout;
+
+	Vertex& operator=(const Vertex& vx)
+	{
+		if (this == &vx) // 自己代入チェック
+			return *this;
+
+		POSITION = vx.POSITION;
+		NORMAL = vx.NORMAL;
+		COLOR = vx.COLOR;
+		UV_POSITION = vx.UV_POSITION;
+		TANGENT = vx.TANGENT;
+
+		return *this;
+	}
+
+private:
+	static const int InputElementCount = 5;
+	static const D3D12_INPUT_ELEMENT_DESC InputElements[InputElementCount];
 };
 
 struct alignas(256) Transform
@@ -18,3 +38,4 @@ struct alignas(256) Transform
 	DirectX::XMMATRIX View;
 	DirectX::XMMATRIX Proj;
 };
+

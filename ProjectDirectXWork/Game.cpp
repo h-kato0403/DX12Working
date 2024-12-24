@@ -6,6 +6,7 @@
 Console gameDebug = Console::Get();
 ConstantBuffer* m_pConstantBuffer[Engine::FRAME_BUFFER_COUNT];
 
+
 bool Game::Initialize()
 {
 	if (!CreateVertexBuffer())
@@ -23,6 +24,11 @@ bool Game::Initialize()
 		gameDebug.Log("Failed GameInitialize - CreateRootSignature");
 		return false;
 	}
+	if (!CreatePipeLineState())
+	{
+		gameDebug.Log("Failed GameInitialize - CreatePipeLineState");
+		return false;
+	}
 
 	gameDebug.Log("Game Initialize Clear");
     return true;
@@ -35,18 +41,52 @@ bool Game::Update()
 
 bool Game::Render()
 {
-    return false;
+	auto currentIndex = Engine::Get().CurrentBackBufferIndex();
+	auto commandList = Engine::Get().CommandList();
+	auto vbView = m_pVertexBuffer->View();
+	auto ibView = m_pIndexBuffer->View();
+
+	commandList->SetGraphicsRootSignature(m_pRootSignature->GetRootSignature());
+	commandList->SetPipelineState(m_pPipelineState->Get());
+	commandList->SetGraphicsRootConstantBufferView(0, m_pConstantBuffer[currentIndex]->GetAddress());
+
+	commandList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	commandList->IASetVertexBuffers(0, 1, &vbView);
+	commandList->IASetIndexBuffer(&ibView);
+
+	commandList->DrawIndexedInstanced(6, 1, 0, 0, 0);
+
+    return true;
 }
 
 bool Game::CreateVertexBuffer()
 {
-	Vertex vx[3] = {};
-	auto vertexSize = sizeof(Vertex) * std::size(vx);
+	Vertex vx[4];
+	Vertex* vertcies = m_porigon.GetPoligonVertex();
+	size_t vertexCount = m_porigon.GetVertexCount();
+
+	for (size_t i = 0; i < vertexCount; i++)
+	{
+		vx[i] = vertcies[i];
+	}
+
+	auto vertexSize = sizeof(vx); // 正しいサイズ
 	auto vertexStride = sizeof(Vertex);
 	m_pVertexBuffer = new VertexBuffer(vertexSize, vertexStride, vx);
 	if (!m_pVertexBuffer->IsValid())
 	{
 		gameDebug.Log("Failed CreateVertexBuffer - new VertexBuffer");
+		return false;
+	}
+
+	uint32_t indices[] = { 0, 1, 2, 0, 3, 2 }; // これに書かれている順序で描画する
+
+	// インデックスバッファの生成
+	auto size = sizeof(uint32_t) * std::size(indices);
+	m_pIndexBuffer = new IndexBuffer(size, indices);
+	if (!m_pIndexBuffer->IsValid())
+	{
+		gameDebug.Log("Failed CreateIndexBuffer - new IndexBuffer");
 		return false;
 	}
 
@@ -85,6 +125,23 @@ bool Game::CreateRootSignature()
 	if (!m_pRootSignature->IsValid())
 	{
 		gameDebug.Log("Failed CreateRootSignature - new RootSignature");
+		return false;
+	}
+
+	return true;
+}
+
+bool Game::CreatePipeLineState()
+{
+	m_pPipelineState = new PipeLineState();
+	m_pPipelineState->SetInputLayout(Vertex::InputLayout);
+	m_pPipelineState->SetRootSignature(m_pRootSignature->GetRootSignature());
+	m_pPipelineState->SetVertexShader(L"../x64/Debug/vs.cso");
+	m_pPipelineState->SetPixelShader(L"../x64/Debug/ps.cso");
+	m_pPipelineState->Create();
+	if (!m_pPipelineState->IsValid())
+	{
+		gameDebug.Log("Failed CreatePipeLineState - new PipeLineState");
 		return false;
 	}
 

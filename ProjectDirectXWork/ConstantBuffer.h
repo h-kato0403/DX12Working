@@ -23,7 +23,6 @@ public:
 	{
 		return m_pMappedPtr;
 	}
-
 	template<typename T>
 	T* GetPtr()
 	{

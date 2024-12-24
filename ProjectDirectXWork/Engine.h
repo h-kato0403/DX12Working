@@ -58,7 +58,7 @@ private:
 
 	void WaitRender();
 
-	const float m_clearColor[4] = { 1.0f,0.0f,0.0f,1.0f };
+	const float m_clearColor[4] = { 0.2f,0.2f,0.2f,1.0f };
 
 	HWND m_hwnd;
 	UINT m_frameBufferWidth = 0;
