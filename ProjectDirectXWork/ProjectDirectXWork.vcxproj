@@ -72,9 +72,17 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\DirectX\DirectXTex-main\DirectXTex;C:\DirectX\DirectXTex-main\Common;$(IncludePath)</IncludePath>
+    <ReferencePath>C:\Work\DirectX\packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\DirectX\DirectXTex-main\DirectXTex;C:\DirectX\DirectXTex-main\Common;$(IncludePath)</IncludePath>
+    <ReferencePath>C:\Work\DirectX\packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ReferencePath)</ReferencePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ReferencePath>C:\Work\DirectX\packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ReferencePath)</ReferencePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ReferencePath>C:\Work\DirectX\packages\Assimp_native_4.1_v142.4.1.0\build\native\include;$(ReferencePath)</ReferencePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -82,10 +90,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -96,12 +108,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -110,12 +126,14 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>${DXTEX_DIR}</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\DirectX\DirectXTex-main\DirectXTex\Bin\Desktop_2022_Win10\x64\Debug</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,16 +144,22 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Users\h-kat\vcpkg\installed\x64-windows\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="AssetLoadBase.cpp" />
+    <ClCompile Include="AssimpLoader.cpp" />
     <ClCompile Include="ConsoleLog.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Engine.cpp" />
@@ -145,12 +169,15 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PipeLineState.cpp" />
     <ClCompile Include="Porigon.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="RootSignature.cpp" />
     <ClCompile Include="SharedVertex.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
+    <ClInclude Include="AssetLoadBase.h" />
+    <ClInclude Include="AssimpLoader.h" />
     <ClInclude Include="ComPtr.h" />
     <ClInclude Include="ConsoleLog.h" />
     <ClInclude Include="ConstantBuffer.h" />
@@ -160,6 +187,7 @@
     <ClInclude Include="KDX.h" />
     <ClInclude Include="PipeLineState.h" />
     <ClInclude Include="Porigon.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="RootSignature.h" />
     <ClInclude Include="SharedVertex.h" />
     <ClInclude Include="VertexBuffer.h" />
@@ -194,7 +222,17 @@
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets" Condition="Exists('..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>このプロジェクトは、このコンピューター上にない NuGet パッケージを参照しています。それらのパッケージをダウンロードするには、[NuGet パッケージの復元] を使用します。詳細については、http://go.microsoft.com/fwlink/?LinkID=322105 を参照してください。見つからないファイルは {0} です。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Assimp_native_4.1_v142.4.1.0\build\native\Assimp_native_4.1_v142.targets'))" />
+  </Target>
 </Project>
