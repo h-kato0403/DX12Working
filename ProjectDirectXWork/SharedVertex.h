@@ -32,6 +32,13 @@ private:
 	static const D3D12_INPUT_ELEMENT_DESC InputElements[InputElementCount];
 };
 
+struct Mesh
+{
+	std::vector<Vertex> Vertices;
+	std::vector<uint32_t> Indices;
+	std::wstring DiffuseMap;
+};
+
 struct alignas(256) Transform
 {
 	DirectX::XMMATRIX World;

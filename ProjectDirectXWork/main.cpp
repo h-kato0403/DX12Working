@@ -1,9 +1,9 @@
 #include "Application.h"
+#include "ConsoleLog.h"
 
-int wmain(int argc, wchar_t** argv, wchar_t** envp)
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Application app = Application::Get();
-	app.StartApplication(TEXT("Test Window"));
+	Application::Get().StartApplication();
 
 	return 0;
 }

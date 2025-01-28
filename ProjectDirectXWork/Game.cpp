@@ -3,6 +3,7 @@
 #include "SharedVertex.h"
 #include "Game.h"
 
+
 Console gameDebug = Console::Get();
 ConstantBuffer* m_pConstantBuffer[Engine::FRAME_BUFFER_COUNT];
 
@@ -31,6 +32,7 @@ bool Game::Initialize()
 	}
 
 	gameDebug.Log("Game Initialize Clear");
+
     return true;
 }
 

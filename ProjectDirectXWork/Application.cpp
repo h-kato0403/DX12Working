@@ -19,9 +19,10 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
-void Application::StartApplication(const TCHAR* appName)
+void Application::StartApplication()
 {
-	InitializeWindow(appName);
+	Console::Get().ConsoleWindowCreate();
+	InitializeWindow();
 
 	if (!Engine::Get().Init(
 		m_hWnd,
@@ -34,9 +35,11 @@ void Application::StartApplication(const TCHAR* appName)
 
 	g_game.Initialize();
 	Main();
+
+	Console::Get().ConsoleWindowClose();
 }
 
-void Application::InitializeWindow(const TCHAR* appName)
+void Application::InitializeWindow()
 {
 	m_hInst = GetModuleHandle(nullptr);
 	if (m_hInst == nullptr)
@@ -53,7 +56,7 @@ void Application::InitializeWindow(const TCHAR* appName)
 	wc.hCursor = LoadCursor(m_hInst, IDC_ARROW);
 	wc.hbrBackground = GetSysColorBrush(COLOR_BACKGROUND);
 	wc.lpszMenuName = nullptr;
-	wc.lpszClassName = appName;
+	wc.lpszClassName = WINDOW_NAME;
 	wc.hIconSm = LoadIcon(m_hInst, IDI_APPLICATION);
 	// ウィンドウクラスの登録。
 	RegisterClassEx(&wc);
@@ -68,8 +71,8 @@ void Application::InitializeWindow(const TCHAR* appName)
 	//	ウィンドウの生成
 	m_hWnd = CreateWindowEx(
 		0,
-		appName,
-		appName,
+		WINDOW_NAME,
+		WINDOW_NAME,
 		style,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
